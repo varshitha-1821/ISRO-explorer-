@@ -2,12 +2,34 @@
 
 {% block content %}
 
-<h2>Login</h2>
+<div class="row justify-content-center">
+    <div class="col-md-5">
 
-<form method="POST" class="w-50">
-    <input type="email" class="form-control mb-3" placeholder="Email" required>
-    <input type="password" class="form-control mb-3" placeholder="Password" required>
-    <button class="btn btn-primary">Login</button>
-</form>
+        <div class="card p-4 shadow">
+            <h3 class="text-center mb-4">Login</h3>
+
+            <form method="POST">
+
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input name="email" type="email" class="form-control" placeholder="Enter email" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Password</label>
+                    <input name="password" type="password" class="form-control" placeholder="Enter password" required>
+                </div>
+
+                <button class="btn btn-primary w-100">Login</button>
+
+            </form>
+
+            <p class="text-center mt-3">
+                Don't have an account? <a href="/register">Register</a>
+            </p>
+        </div>
+
+    </div>
+</div>
 
 {% endblock %}
