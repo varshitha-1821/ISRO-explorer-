@@ -1,30 +1,100 @@
+/* ---------------- FONTS ---------------- */
+@font-face {
+    font-family: 'HolaMango';
+    src: url('../fonts/HolaMangoDemo.ttf');
+}
+
+@font-face {
+    font-family: 'Preton';
+    src: url('../fonts/Preton-Regular.otf');
+}
+
+@font-face {
+    font-family: 'Xerion';
+    src: url('../fonts/Xerion-Regular.otf');
+}
+
+/* ---------------- GLOBAL ---------------- */
 body {
     background-color: #0b0f1a;
     color: white;
+    font-family: 'Xerion', sans-serif;
 }
 
-.card {
-    background-color: #1c1f2e;
-    color: white;
-    border-radius: 10px;
-}
-
+/* ---------------- NAVBAR ---------------- */
 .navbar {
     border-bottom: 2px solid #00bcd4;
 }
 
+.navbar-nav .nav-link {
+    color: white !important;
+    font-family: 'HolaMango', sans-serif;
+    font-size: 18px;
+    font-weight: normal;   /* ensure not bold */
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 22px;
+}
+
+/* ---------------- HERO ---------------- */
+.hero {
+    height: 60vh;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)),
+                url("https://images.unsplash.com/photo-1446776811953-b23d57bd21aa");
+    background-size: cover;
+    background-position: center;
+}
+
+/* ---------------- HEADINGS ---------------- */
+h1, h2, h3, h4, h5 {
+    color: #FFD700;
+    font-family: 'Preton', sans-serif;
+    font-weight: normal;   /* remove bold from headings if needed */
+}
+
+/* ---------------- DESCRIPTION TEXT ---------------- */
+p {
+    color: white;
+    font-family: 'Xerion', sans-serif;
+    font-weight: normal !important;   /* 🔥 THIS FIXES YOUR ISSUE */
+}
+
+/* ---------------- CARD TEXT FIX ---------------- */
+.card p {
+    font-weight: normal !important;   /* ensures card descriptions not bold */
+}
+
+/* ---------------- CARDS ---------------- */
 .card {
-    transition: transform 0.3s ease;
-}
-
-.card:hover {
-    transform: scale(1.05);
-}
-
-button {
+    background-color: #1c1f2e;
+    border-radius: 12px;
     transition: 0.3s;
 }
 
+/* Hover */
+.feature-card:hover {
+    transform: translateY(-10px);
+}
+
+/* ---------------- ANIMATION ---------------- */
+.fade-in {
+    animation: fadeIn 2s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------------- BUTTON ---------------- */
 button:hover {
-    opacity: 0.8;
+    opacity: 0.85;
 }

@@ -2,9 +2,39 @@
 
 {% block content %}
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to ISRO Explorer 🚀</h1>
-    <p class="lead">Explore missions, satellites and scientists of ISRO</p>
+<!-- HERO SECTION -->
+<div class="hero text-center text-white d-flex align-items-center justify-content-center">
+    <div>
+        <h1 class="display-3 fw-bold fade-in">ISRO Explorer 🚀</h1>
+        <p class="lead fade-in">Discover India's Space Missions & Innovations</p>
+        <a href="/projects" class="btn btn-info mt-3">Explore Missions</a>
+    </div>
+</div>
+
+<!-- FEATURES -->
+<div class="row text-center mt-5">
+
+    <div class="col-md-4">
+        <div class="card p-4 shadow feature-card">
+            <h4>🚀 Missions</h4>
+            <p>Explore Chandrayaan, Mangalyaan & more</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card p-4 shadow feature-card">
+            <h4>🛰 Satellites</h4>
+            <p>Search and discover satellites</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card p-4 shadow feature-card">
+            <h4>👨‍🔬 Scientists</h4>
+            <p>Learn about ISRO's pioneers</p>
+        </div>
+    </div>
+
 </div>
 
 {% endblock %}

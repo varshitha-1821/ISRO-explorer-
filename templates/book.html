@@ -2,13 +2,30 @@
 
 {% block content %}
 
-<h2>Book a Session</h2>
+<div class="row justify-content-center">
+    <div class="col-md-6">
 
-<form method="POST" class="w-50">
-    <input type="text" class="form-control mb-3" placeholder="Your Name" required>
-    <input type="date" class="form-control mb-3" required>
-    <input type="text" class="form-control mb-3" placeholder="Topic" required>
-    <button class="btn btn-warning">Book</button>
-</form>
+        <div class="card p-4 shadow">
+            <h3 class="text-center mb-4">Book a Session</h3>
+
+            <form method="POST">
+
+                <div class="mb-3">
+                    <label>Date</label>
+                    <input name="date" type="date" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label>Topic</label>
+                    <input name="topic" type="text" class="form-control" placeholder="Enter topic" required>
+                </div>
+
+                <button class="btn btn-warning w-100">Book Session</button>
+
+            </form>
+        </div>
+
+    </div>
+</div>
 
 {% endblock %}

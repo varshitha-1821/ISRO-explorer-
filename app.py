@@ -2,9 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 
 app = Flask(__name__)
-app.secret_key = "secret123"   # needed for session
+app.secret_key = "secret123"
 
-# ---------------- DATABASE SETUP ----------------
+# ---------------- DATABASE ----------------
 def init_db():
     conn = sqlite3.connect("database.db")
     cur = conn.cursor()
@@ -15,6 +15,15 @@ def init_db():
         name TEXT,
         email TEXT UNIQUE,
         password TEXT
+    )
+    """)
+
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS bookings (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user TEXT,
+        date TEXT,
+        topic TEXT
     )
     """)
 
@@ -67,7 +76,7 @@ def login():
         conn.close()
 
         if user:
-            session["user"] = user[1]   # store name
+            session["user"] = user[1]
             return redirect(url_for("home"))
         else:
             return "Invalid credentials!"
@@ -93,13 +102,25 @@ def satellites():
 def members():
     return render_template("members.html")
 
-# ---------------- BOOKING (PROTECTED) ----------------
+# ---------------- BOOK ----------------
 @app.route("/book", methods=["GET", "POST"])
 def book():
     if "user" not in session:
         return redirect(url_for("login"))
 
     if request.method == "POST":
+        name = session["user"]
+        date = request.form["date"]
+        topic = request.form["topic"]
+
+        conn = sqlite3.connect("database.db")
+        cur = conn.cursor()
+
+        cur.execute("INSERT INTO bookings (user, date, topic) VALUES (?, ?, ?)",
+                    (name, date, topic))
+        conn.commit()
+        conn.close()
+
         return redirect(url_for("success"))
 
     return render_template("book.html")
@@ -108,7 +129,6 @@ def book():
 @app.route("/success")
 def success():
     return render_template("success.html")
-
 
 if __name__ == "__main__":
     app.run(debug=True)
