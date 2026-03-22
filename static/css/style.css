@@ -15,86 +15,128 @@
 }
 
 /* ---------------- GLOBAL ---------------- */
-body {
-    background-color: #0b0f1a;
-    color: white;
-    font-family: 'Xerion', sans-serif;
+body{
+    margin:0;
+    padding:0;
+    background:#05070d;
+    color:white;
+    font-family:'Xerion', sans-serif;
+    overflow-x:hidden;
+}
+
+/* ---------------- SPACE BACKGROUND ---------------- */
+body::before{
+    content:"";
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:
+        radial-gradient(2px 2px at 20% 30%, white, transparent),
+        radial-gradient(2px 2px at 70% 60%, white, transparent),
+        radial-gradient(2px 2px at 40% 80%, white, transparent),
+        radial-gradient(2px 2px at 90% 20%, white, transparent);
+    background-size:200px 200px;
+    animation:starsMove 120s linear infinite;
+    z-index:-1;
+}
+
+@keyframes starsMove{
+    from{ transform:translateY(0); }
+    to{ transform:translateY(-2000px); }
 }
 
 /* ---------------- NAVBAR ---------------- */
-.navbar {
-    border-bottom: 2px solid #00bcd4;
+.navbar{
+    background:rgba(0,0,0,0.6) !important;
+    backdrop-filter:blur(10px);
 }
 
-.navbar-nav .nav-link {
-    color: white !important;
-    font-family: 'HolaMango', sans-serif;
-    font-size: 18px;
-    font-weight: normal;   /* ensure not bold */
+.navbar-nav .nav-link{
+    font-family:'HolaMango', sans-serif;
+    color:white !important;
+    font-size:18px;
+    margin-left:15px;
 }
 
-.navbar-brand {
-    font-weight: bold;
-    font-size: 22px;
-}
-
-/* ---------------- HERO ---------------- */
-.hero {
-    height: 60vh;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)),
-                url("https://images.unsplash.com/photo-1446776811953-b23d57bd21aa");
-    background-size: cover;
-    background-position: center;
+.navbar-nav .nav-link:hover{
+    color:#fff176 !important; /* soft yellow */
 }
 
 /* ---------------- HEADINGS ---------------- */
-h1, h2, h3, h4, h5 {
-    color: #FFD700;
-    font-family: 'Preton', sans-serif;
-    font-weight: normal;   /* remove bold from headings if needed */
+h1,h2,h3,h4,h5{
+    font-family:'Preton', sans-serif;
+    color:#FFD700;
+    text-shadow:0 0 12px rgba(255,215,0,0.8);
 }
 
-/* ---------------- DESCRIPTION TEXT ---------------- */
-p {
-    color: white;
-    font-family: 'Xerion', sans-serif;
-    font-weight: normal !important;   /* 🔥 THIS FIXES YOUR ISSUE */
+/* ---------------- TEXT ---------------- */
+p{
+    font-family:'Xerion', sans-serif;
+    color:white !important;
+    opacity:1 !important;
+    font-weight:normal !important;
 }
 
-/* ---------------- CARD TEXT FIX ---------------- */
-.card p {
-    font-weight: normal !important;   /* ensures card descriptions not bold */
+/* ---------------- HERO ---------------- */
+.hero{
+    height:65vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:
+        linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.9)),
+        url("https://images.unsplash.com/photo-1446776811953-b23d57bd21aa");
+    background-size:cover;
 }
 
 /* ---------------- CARDS ---------------- */
-.card {
-    background-color: #1c1f2e;
-    border-radius: 12px;
-    transition: 0.3s;
+.card{
+    background:rgba(28,31,46,0.7);
+    border-radius:15px;
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+    transition:0.4s;
 }
 
-/* Hover */
-.feature-card:hover {
-    transform: translateY(-10px);
+/* 🔥 UPDATED HOVER (LIGHT YELLOW NEON) */
+.card:hover{
+    transform:translateY(-10px) scale(1.03);
+    box-shadow:
+        0 0 20px rgba(255,255,150,0.8),
+        0 0 40px rgba(255,255,150,0.4),
+        0 0 60px rgba(255,255,150,0.2);
 }
 
-/* ---------------- ANIMATION ---------------- */
-.fade-in {
-    animation: fadeIn 2s ease-in;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* ---------------- CARD TITLE ---------------- */
+.card h4{
+    font-size:22px;
+    letter-spacing:1px;
 }
 
 /* ---------------- BUTTON ---------------- */
-button:hover {
-    opacity: 0.85;
+.btn-info{
+    background:linear-gradient(45deg,#ffd54f,#ffea00);
+    border:none;
+    color:black;
+}
+
+.btn-info:hover{
+    transform:scale(1.05);
+}
+
+/* ---------------- ANIMATION ---------------- */
+.fade-in{
+    animation:fadeIn 1.5s ease-in;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
