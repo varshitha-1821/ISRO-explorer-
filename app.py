@@ -1,134 +1,96 @@
-from flask import Flask, render_template, request, redirect, url_for, session
-import sqlite3
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
-app.secret_key = "secret123"
 
-# ---------------- DATABASE ----------------
-def init_db():
-    conn = sqlite3.connect("database.db")
-    cur = conn.cursor()
+# ---------------- SATELLITE DATABASE ---------------- #
 
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS users (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        email TEXT UNIQUE,
-        password TEXT
-    )
-    """)
+satellites = [
+    {
+        "name": "Chandrayaan",
+        "year": "2008",
+        "description": "India's first lunar exploration mission which confirmed the presence of water molecules on the Moon."
+    },
+    {
+        "name": "Mangalyaan",
+        "year": "2014",
+        "description": "Mars Orbiter Mission that made India the first country to reach Mars orbit on its first attempt."
+    },
+    {
+        "name": "Gaganyaan",
+        "year": "2025",
+        "description": "India’s upcoming human spaceflight mission to send astronauts into space."
+    },
+    {
+        "name": "Cartosat",
+        "year": "2005",
+        "description": "Earth observation satellite used for mapping, urban planning and infrastructure monitoring."
+    },
+    {
+        "name": "RISAT",
+        "year": "2009",
+        "description": "Radar Imaging Satellite used for surveillance and disaster monitoring."
+    }
+]
 
-    cur.execute("""
-    CREATE TABLE IF NOT EXISTS bookings (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user TEXT,
-        date TEXT,
-        topic TEXT
-    )
-    """)
+# ---------------- ROUTES ---------------- #
 
-    conn.commit()
-    conn.close()
-
-init_db()
-
-# ---------------- HOME ----------------
-@app.route("/")
+@app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template('index.html')
 
-# ---------------- REGISTER ----------------
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    if request.method == "POST":
-        name = request.form["name"]
-        email = request.form["email"]
-        password = request.form["password"]
 
-        conn = sqlite3.connect("database.db")
-        cur = conn.cursor()
-
-        try:
-            cur.execute("INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-                        (name, email, password))
-            conn.commit()
-        except:
-            return "User already exists!"
-
-        conn.close()
-        return redirect(url_for("login"))
-
-    return render_template("register.html")
-
-# ---------------- LOGIN ----------------
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        email = request.form["email"]
-        password = request.form["password"]
-
-        conn = sqlite3.connect("database.db")
-        cur = conn.cursor()
-
-        cur.execute("SELECT * FROM users WHERE email=? AND password=?", (email, password))
-        user = cur.fetchone()
-
-        conn.close()
-
-        if user:
-            session["user"] = user[1]
-            return redirect(url_for("home"))
-        else:
-            return "Invalid credentials!"
-
-    return render_template("login.html")
-
-# ---------------- LOGOUT ----------------
-@app.route("/logout")
-def logout():
-    session.pop("user", None)
-    return redirect(url_for("home"))
-
-# ---------------- PROJECT PAGES ----------------
-@app.route("/projects")
+@app.route('/projects')
 def projects():
-    return render_template("projects.html")
+    return render_template('projects.html')
 
-@app.route("/satellites")
-def satellites():
-    return render_template("satellites.html")
 
-@app.route("/members")
+@app.route('/satellites', methods=["GET", "POST"])
+def satellites_page():
+
+    results = None
+
+    if request.method == "POST":
+
+        query = request.form["search"].lower()
+
+        results = []
+
+        for sat in satellites:
+            if query in sat["name"].lower() or query in sat["year"]:
+                results.append(sat)
+
+    return render_template("satellites.html", results=results)
+
+
+@app.route('/members')
 def members():
     return render_template("members.html")
 
-# ---------------- BOOK ----------------
-@app.route("/book", methods=["GET", "POST"])
+
+@app.route('/book', methods=["GET","POST"])
 def book():
-    if "user" not in session:
-        return redirect(url_for("login"))
+
+    message = None
 
     if request.method == "POST":
-        name = session["user"]
+        name = request.form["name"]
+        email = request.form["email"]
         date = request.form["date"]
-        topic = request.form["topic"]
 
-        conn = sqlite3.connect("database.db")
-        cur = conn.cursor()
+        message = f"Session booked successfully for {name} on {date}"
 
-        cur.execute("INSERT INTO bookings (user, date, topic) VALUES (?, ?, ?)",
-                    (name, date, topic))
-        conn.commit()
-        conn.close()
+    return render_template("book.html", message=message)
 
-        return redirect(url_for("success"))
 
-    return render_template("book.html")
+@app.route('/login')
+def login():
+    return render_template("login.html")
 
-# ---------------- SUCCESS ----------------
-@app.route("/success")
-def success():
-    return render_template("success.html")
+
+@app.route('/register')
+def register():
+    return render_template("register.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

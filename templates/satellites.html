@@ -2,16 +2,61 @@
 
 {% block content %}
 
-<h2>Satellites</h2>
+<div class="container mt-5">
 
-<input type="text" id="search" class="form-control mb-3" placeholder="Search Satellite...">
+<h1 class="text-center mb-4">Satellite Explorer</h1>
 
-<ul class="list-group" id="satelliteList">
-    <li class="list-group-item">INSAT</li>
-    <li class="list-group-item">GSAT</li>
-    <li class="list-group-item">RISAT</li>
-    <li class="list-group-item">Cartosat</li>
-    <li class="list-group-item">NavIC</li>
-</ul>
+<form method="POST" class="search-box">
+
+<input type="text"
+name="search"
+placeholder="Search satellite name or year..."
+required>
+
+<button type="submit">Search</button>
+
+</form>
+
+<div class="row mt-5">
+
+{% if results is not none %}
+
+{% if results %}
+
+{% for sat in results %}
+
+<div class="col-md-4">
+
+<div class="card satellite-card">
+
+<h3>{{sat.name}}</h3>
+
+<p><strong>Launch Year:</strong> {{sat.year}}</p>
+
+<p>{{sat.description}}</p>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+{% else %}
+
+<div class="text-center">
+
+<h3>No Results Found</h3>
+
+<p>Try searching for Chandrayaan, Mangalyaan or a launch year.</p>
+
+</div>
+
+{% endif %}
+
+{% endif %}
+
+</div>
+
+</div>
 
 {% endblock %}
