@@ -2,32 +2,30 @@
 
 {% block content %}
 
-<div class="container mt-5">
+<div class="row justify-content-center">
+    <div class="col-md-6">
 
-<h1 class="text-center mb-4">Book a Space Learning Session</h1>
+        <div class="card p-4 shadow">
+            <h3 class="text-center mb-4">Book a Session</h3>
 
-<form method="POST" class="booking-form">
+            <form method="POST">
 
-<input type="text" name="name" placeholder="Your Name" required>
+                <div class="mb-3">
+                    <label class="form-label text-white">Date</label>
+                    <input name="date" type="date" class="form-control" required>
+                </div>
 
-<input type="email" name="email" placeholder="Email Address" required>
+                <div class="mb-3">
+                    <label class="form-label text-white">Topic</label>
+                    <input name="topic" type="text" class="form-control" placeholder="Enter topic" required>
+                </div>
 
-<input type="date" name="date" required>
+                <button class="btn btn-warning w-100">Book Session</button>
 
-<button type="submit">Book Session</button>
+            </form>
+        </div>
 
-</form>
-
-{% if message %}
-
-<div class="confirmation-box">
-
-<h3>{{message}}</h3>
-
-</div>
-
-{% endif %}
-
+    </div>
 </div>
 
 {% endblock %}
